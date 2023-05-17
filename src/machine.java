@@ -34,57 +34,69 @@ public class machine {
 
         System.out.println("\nTotal amount: " + total_amount);
 
-        System.out.println("\nDispensing Amount: ");
-        dispensing_amount = sc.nextInt();
+        while(true){
+        	if(total_amount <= 0){
+	        	System.out.println("\nNo more bills or coins left! \nGoodbye!");
+	        	System.exit(0);
+        	}
 
-       // check if machine has enough money
-        if(total_amount < dispensing_amount){
-        	System.out.println("Not enough money in the machine");
-        }else{
-            String str_amount = String.valueOf(dispensing_amount);	// gets length of dispensing amount
-            String[] digits = str_amount.split("");
+	        System.out.println("\nDispensing Amount: ");
+	        dispensing_amount = sc.nextInt();
 
-            int length = digits.length;
-            int multiplier = 1;
-            int[] values = new int[length];
+	        if(dispensing_amount == 0){
+	        	System.out.println("Goodbye!");
+	        	System.exit(0);
+	        }else{
+	       // check if machine has enough money
+	        if(total_amount < dispensing_amount){
+	        	System.out.println("Not enough money in the machine");
+	        }else{
+	            String str_amount = String.valueOf(dispensing_amount);	// gets length of dispensing amount
+	            String[] digits = str_amount.split("");
 
-            // 125 --> 100, 20, 5
-            for(i = length-1; i >= 0; i--){
-            	values[i] = Integer.parseInt(digits[i]) * multiplier;
-            	multiplier = multiplier * TEN;
-            }
+	            int length = digits.length;
+	            int multiplier = 1;
+	            int[] values = new int[length];
 
-            int goal = 0;
-            for(i = 0; i < length; i++){
-            	temp_value = 0;
-            	//System.out.println(values[i]);
-                for (Integer key : amounts.keySet()) {
-            		for(j = 0; j < machine.get(key); j++){
-            			index = j + 1;
-            			temp_value = key * index;
-            			if(temp_value == values[i]){
-            				if(goal != dispensing_amount){
-            					amounts.put(key, index);
-                				goal = goal + temp_value;
-            				}
-            				temp_value = 0;
+	            // 125 --> 100, 20, 5
+	            for(i = length-1; i >= 0; i--){
+	            	values[i] = Integer.parseInt(digits[i]) * multiplier;
+	            	multiplier = multiplier * TEN;
+	            }
 
-            				if(i != length-1) i = i + 1;
-            			}
-            		}
+	            int goal = 0;
+	            for(i = 0; i < length; i++){
+	            	temp_value = 0;
+	            	//System.out.println(values[i]);
+	                for (Integer key : amounts.keySet()) {
+	            		for(j = 0; j < machine.get(key); j++){
+	            			index = j + 1;
+	            			temp_value = key * index;
+	            			if(temp_value == values[i]){
+	            				if(goal != dispensing_amount){
+	            					amounts.put(key, index);
+	                				goal = goal + temp_value;
+	            				}
+	            				temp_value = 0;
 
-                }
+	            				if(i != length-1) i = i + 1;
+	            			}
+	            		}
 
-            }
-            for (Integer key : amounts.keySet()) {
-            	if(amounts.get(key) != 0){
-            		System.out.print("Amount: "+ amounts.get(key) + " P" + key + " ");
-            	}
+	                }
 
-            }
+	            }
+	            for (Integer key : amounts.keySet()) {
+	            	if(amounts.get(key) != 0){
+	            		System.out.print("Amount: "+ amounts.get(key) + " P" + key + " ");
+	            	}
+
+	            }
+	            System.out.println("");
+	        }
+
         }
-
-
+        }
 	}
 
 }
