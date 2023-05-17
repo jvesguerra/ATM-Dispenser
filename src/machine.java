@@ -17,7 +17,7 @@ public class machine {
 
 		// create maps
 		for(i = 0; i < FIVE; i++){
-			amounts.put(bills[i], 0);
+			//amounts.put(bills[i], 0);
 			machine.put(bills[i], 0);
 		}
 
@@ -68,14 +68,17 @@ public class machine {
 	            for(i = 0; i < length; i++){
 	            	temp_value = 0;
 	            	//System.out.println(values[i]);
-	                for (Integer key : amounts.keySet()) {
+	                for (Integer key : machine.keySet()) {
 	            		for(j = 0; j < machine.get(key); j++){
 	            			index = j + 1;
 	            			temp_value = key * index;
+
 	            			if(temp_value == values[i]){
 	            				if(goal != dispensing_amount){
 	            					amounts.put(key, index);
 	                				goal = goal + temp_value;
+
+	                				machine.put(key, machine.get(key)-index);
 	            				}
 	            				temp_value = 0;
 
@@ -93,6 +96,15 @@ public class machine {
 
 	            }
 	            System.out.println("");
+	            total_amount = total_amount - dispensing_amount;
+
+	            System.out.println("");
+	            System.out.println(total_amount);
+	            for (Integer key : machine.keySet()) {
+	            	System.out.println(key + " = " + machine.get(key));
+	            }
+
+	            amounts.clear();
 	        }
 
         }
